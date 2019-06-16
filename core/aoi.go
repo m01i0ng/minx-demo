@@ -63,3 +63,43 @@ func (a *Aoi) String() string {
 
     return s
 }
+
+//根据网格 ID 得到周边九宫格集合
+func (a *Aoi) GetSurroundGrids(gridId int) []*Grid {
+    //判断 gridId 是否在 aoi 中
+    if _, ok := a.grids[gridId]; !ok {
+        return nil
+    }
+
+    var grids []*Grid
+    grids = append(grids, a.grids[gridId])
+
+    //获取 X 方向所有网格
+    idx := gridId % a.SumX
+    if idx > 0 {
+        grids = append(grids, a.grids[gridId-1])
+    }
+
+    if idx < a.SumX-1 {
+        grids = append(grids, a.grids[gridId+1])
+    }
+
+    gridIdsX := make([]int, 0, len(grids))
+    for _, grid := range grids {
+        gridIdsX = append(gridIdsX, grid.Id)
+    }
+
+    for _, v := range gridIdsX {
+        idy := v / a.SumY
+
+        if idy > 0 {
+            grids = append(grids, a.grids[v-a.SumX])
+        }
+
+        if idy < a.SumY-1 {
+            grids = append(grids, a.grids[v+a.SumX])
+        }
+    }
+
+    return grids
+}
