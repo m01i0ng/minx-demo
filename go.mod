@@ -1,3 +1,3 @@
-module github.com/tinyalley/minx-demo
+module github.com/m01i0ng/minx-demo
 
 go 1.12
