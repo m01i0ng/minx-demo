@@ -51,7 +51,8 @@ func (g *Grid) Remove(playerId int) {
     golog.Infof("player %d left", playerId)
 }
 
-func (g *Grid) GetPlayers() []int {
+//GetPlayerIds 获取当前网格全部玩家 ID
+func (g *Grid) GetPlayerIds() []int {
     g.playersLock.RLock()
     defer g.playersLock.RUnlock()
 
