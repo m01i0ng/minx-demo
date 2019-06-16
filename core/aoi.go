@@ -125,3 +125,30 @@ func (a *Aoi) GetSurroundPlayerIds(x, y float32) []int {
 
     return playerIds
 }
+
+//AddPlayerToGrid 通过网格 ID 添加玩家到网格中
+func (a *Aoi) AddPlayerToGridByGridId(playerId, gridId int) {
+    a.grids[gridId].Add(playerId)
+}
+
+//AddPlayerToGridByPos 通过坐标添加玩家到网格中
+func (a *Aoi) AddPlayerToGridByPos(playerId int, x, y float32) {
+    gridId := a.GetGridId(x, y)
+    a.grids[gridId].Add(playerId)
+}
+
+//RemovePlayerFromGridByGridId 通过网格 ID 从网格中删除玩家
+func (a *Aoi) RemovePlayerFromGridByGridId(playerId, gridId int) {
+    a.grids[gridId].Remove(playerId)
+}
+
+//RemovePlayerFromGridByGridId 通过坐标从网格中删除玩家
+func (a *Aoi) RemovePlayerFromGridByPos(playerId int, x, y float32) {
+    gridId := a.GetGridId(x, y)
+    a.grids[gridId].Remove(playerId)
+}
+
+//GetPlayerIds 通过网格 ID 获取所有玩家 ID
+func (a *Aoi) GetPlayerIds(gridId int) []int {
+    return a.grids[gridId].GetPlayerIds()
+}
