@@ -64,7 +64,7 @@ func (a *Aoi) String() string {
     return s
 }
 
-//根据网格 ID 得到周边九宫格集合
+//GetSurroundGrids 根据网格 ID 得到周边九宫格集合
 func (a *Aoi) GetSurroundGrids(gridId int) []*Grid {
     //判断 gridId 是否在 aoi 中
     if _, ok := a.grids[gridId]; !ok {
@@ -102,4 +102,26 @@ func (a *Aoi) GetSurroundGrids(gridId int) []*Grid {
     }
 
     return grids
+}
+
+//GetGridId 通过坐标获取网格 ID
+func (a *Aoi) GetGridId(x, y float32) int {
+    idx := (int(x) - a.MinX) / a.gridWidth()
+    idy := (int(y) - a.MinY) / a.gridLength()
+
+    return idy*a.SumX + idx
+}
+
+//GetSurroundPlayerIds 通过坐标获取周围所有玩家 ID
+func (a *Aoi) GetSurroundPlayerIds(x, y float32) []int {
+    gridId := a.GetGridId(x, y)
+    grids := a.GetSurroundGrids(gridId)
+
+    var playerIds []int
+
+    for _, grid := range grids {
+        playerIds = append(playerIds, grid.GetPlayerIds()...)
+    }
+
+    return playerIds
 }
